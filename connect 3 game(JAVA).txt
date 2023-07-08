@@ -1,0 +1,60 @@
+package com.example.connectgame3;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+public class MainActivity extends AppCompatActivity {
+    int active_player=0;
+    int stop[]={2,2,2,2,2,2,2,2,2};
+    int winning[][]={{0,1,2},{3,4,5},{6,7,8},{0,3,6},{1,4,7},{2,5,8},{0,4,8},{2,4,6}};
+    public void dropin(View view)
+    {
+
+        ImageView counter=(ImageView) view;
+        int tagger=Integer.parseInt(counter.getTag().toString());
+
+        if(stop[tagger]==2)
+        {
+            stop[tagger]=active_player;
+            counter.setTranslationY(-1000f);
+            if(active_player==0)
+            {
+                counter.setImageResource(R.mipmap.coint1);
+                active_player=1;
+            }
+            else {
+                counter.setImageResource(R.mipmap.coint2);
+                active_player=0;
+            }
+            counter.animate().translationYBy(1000f).setDuration(300);
+        }
+        for(int [] winning :winning)
+        {
+            if(stop[winning[0]]==stop[winning[1]] && stop[winning[1]]==stop[winning[2]] && stop[winning[0]]!=2)
+            {
+                System.out.println(stop[winning[0]]);
+                if(stop[winning[0]]==0)
+                {
+                    Toast.makeText(this, "PLAYER 1 WON", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(this, "PLAYER 2 WON", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+
+
+
+
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    }
+}
